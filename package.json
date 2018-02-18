@@ -1,0 +1,32 @@
+{
+  "name": "html-webpack-inline-style-plugin",
+  "version": "0.0.1",
+  "description": "Inline styles using webpack, HTMLWebpackPlugin, and juice",
+  "main": "index.js",
+  "files": [
+    "index.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/djaax/html-webpack-inline-style-plugin.git"
+  },
+  "keywords": [
+    "webpack",
+    "plugin",
+    "html-webpack-plugin",
+    "inline",
+    "style",
+    "css",
+    "email",
+    "juice"
+  ],
+  "author": "Dustin Jaacks <dustin.jaacks@gmail.com> (https://github.com/djaax)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/djaax/html-webpack-inline-style-plugin/issues"
+  },
+  "homepage": "https://github.com/djaax/html-webpack-inline-style-plugin",
+  "dependencies": {
+    "juice": "^4.2.2"
+  }
+}
