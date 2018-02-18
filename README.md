@@ -29,7 +29,7 @@ $ npm install --save-dev html-webpack-inline-style-plugin
 
 Install the plugin with yarn:
 ```shell
-$ yarn add -dev html-webpack-inline-style-plugin
+$ yarn add --dev html-webpack-inline-style-plugin
 ```
 
 Basic Usage
