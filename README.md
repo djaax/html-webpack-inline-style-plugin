@@ -6,8 +6,8 @@ This package extends the [html-webpack-plugin](https://github.com/jantimon/html-
 You might want to use this to automate email generation with webpack.
 
 The following input provided by the HTMLWebpackPlugin:
-```js
-"<style>div{color:red;}</style><div/>"
+```html
+<style>div{color:red;}</style><div/>
 ```
 
 will result in
@@ -29,7 +29,7 @@ $ npm install --save-dev html-webpack-inline-style-plugin
 
 Install the plugin with yarn:
 ```shell
-$ yarn add html-webpack-inline-style-plugin
+$ yarn add -dev html-webpack-inline-style-plugin
 ```
 
 Basic Usage
