@@ -2,17 +2,17 @@
 
 const juice = require('juice');
 
-function HtmlWebpackInlinerPlugin (options) {
-    // Initialize
+class HtmlWebpackInlinerPlugin {
+  apply(compiler) {
+    compiler.hooks.compilation.tap('HtmlWebpackInlinerPlugin', compilation => {
+      compilation.hooks.htmlWebpackPluginBeforeHtmlProcessing.tap(
+        'HtmlWebpackInlinerPlugin',
+        data => {
+          data.html = juice(data.html);
+        }
+      );
+    });
+  }
 }
-
-HtmlWebpackInlinerPlugin.prototype.apply = compiler => {
-	compiler.plugin('compilation', compilation => {
-		compilation.plugin('html-webpack-plugin-after-html-processing', (htmlPluginData, callback) => {
-			htmlPluginData.html = juice(htmlPluginData.html);
-			callback(null, htmlPluginData);
-		});
-	});
-};
 
 module.exports = HtmlWebpackInlinerPlugin;
