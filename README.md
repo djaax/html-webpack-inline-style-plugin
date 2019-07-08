@@ -52,3 +52,19 @@ Add the plugin to your webpack config as follows:
 	...
 }
 ```
+
+With [Juice options](https://www.npmjs.com/package/juice#options):
+
+```javascript
+{
+	...
+	plugins: [
+	  new HtmlWebpackPlugin(),
+	  new HtmlWebpackInlineStylePlugin({
+	    juiceOptions: {
+	      removeStyleTags: false
+	    }
+	  })
+	]
+	...
+}

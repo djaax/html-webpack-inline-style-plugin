@@ -2,8 +2,11 @@
 
 const juice = require('juice');
 
+let juiceOptions;
+
 function HtmlWebpackInlinerPlugin(options) {
     // Initialize
+    juiceOptions = options.juiceOptions || {};
 }
 
 HtmlWebpackInlinerPlugin.prototype.apply = compiler => {
@@ -14,7 +17,7 @@ HtmlWebpackInlinerPlugin.prototype.apply = compiler => {
         (compilation.hooks
             ? compilation.hooks.htmlWebpackPluginAfterHtmlProcessing.tapAsync.bind(compilation.hooks.htmlWebpackPluginAfterHtmlProcessing, 'html-webpack-inline-style-plugin')
             : compilation.plugin.bind(compilation, 'html-webpack-plugin-after-html-processing'))((htmlPluginData, callback) => {
-            htmlPluginData.html = juice(htmlPluginData.html);
+            htmlPluginData.html = juice(htmlPluginData.html, juiceOptions);
             callback(null, htmlPluginData);
         });
     });
