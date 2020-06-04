@@ -1,26 +1,39 @@
 'use strict';
 
 const juice = require('juice');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 let juiceOptions;
 
+const pluginName = 'html-webpack-inline-style-plugin';
+
 function HtmlWebpackInlinerPlugin(options) {
     // Initialize
-    juiceOptions = options.juiceOptions || {};
+    juiceOptions = options && options.juiceOptions || {};
 }
 
 HtmlWebpackInlinerPlugin.prototype.apply = compiler => {
-    (compiler.hooks
-        ? compiler.hooks.compilation.tap.bind(compiler.hooks.compilation, 'html-webpack-inline-style-plugin')
-        : compiler.plugin.bind(compiler, 'compilation'))(compilation => {
 
-        (compilation.hooks
-            ? compilation.hooks.htmlWebpackPluginAfterHtmlProcessing.tapAsync.bind(compilation.hooks.htmlWebpackPluginAfterHtmlProcessing, 'html-webpack-inline-style-plugin')
-            : compilation.plugin.bind(compilation, 'html-webpack-plugin-after-html-processing'))((htmlPluginData, callback) => {
-            htmlPluginData.html = juice(htmlPluginData.html, juiceOptions);
-            callback(null, htmlPluginData);
-        });
-    });
+    const handleCompilation = (compiler, callback) => compiler.hooks
+        ? compiler.hooks.compilation.tap(pluginName, callback)
+        : compiler.plugin('compilation', callback);
+
+    const handleAfterHtmlProcess = (compilation, callback) => {
+        if (compilation.hooks) {
+            // Fix HtmlWebpackPlugin >= 4
+            const afterHtmlProcessHook =
+                compilation.hooks.htmlWebpackPluginAfterHtmlProcessing ||
+                HtmlWebpackPlugin.getHooks(compilation).afterTemplateExecution
+            afterHtmlProcessHook.tapAsync(pluginName, callback)
+        } else {
+           compilation.plugin('html-webpack-plugin-after-html-processing', callback);
+        }
+    }
+
+    handleCompilation(compiler, compilation => handleAfterHtmlProcess(compilation, (htmlPluginData, callback) => {
+        htmlPluginData.html = juice(htmlPluginData.html, juiceOptions);
+        callback(null, htmlPluginData);
+    }));
 };
 
 module.exports = HtmlWebpackInlinerPlugin;
