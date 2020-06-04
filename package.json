@@ -28,5 +28,8 @@
   "homepage": "https://github.com/djaax/html-webpack-inline-style-plugin",
   "dependencies": {
     "juice": "^4.2.2"
+  },
+  "devDependencies": {
+    "html-webpack-plugin": "^4.3.0"
   }
 }
